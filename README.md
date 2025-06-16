@@ -1,10 +1,10 @@
 #LIVE DEMO - https://fornevercollective.github.io/anduril/
-///////////////////////
------------------------
+> ///////////////////////
+> -----------------------
 <img width="1318" alt="anduril+sdk updates 1" src="https://github.com/user-attachments/assets/e87e5c12-b4d5-4a30-8638-71961ec51ebf" />
 <img width="1318" alt="anduril+sdk updates 2" src="https://github.com/user-attachments/assets/70d2703d-9eed-4959-97a1-288077cec7de" />
-///////////////////////
------------------------
+> ///////////////////////
+> -----------------------
 # Anduril + Lattice sdk 
 
 A tactical defense interface clone built for integration with Anduril's SDK, featuring real-time entity tracking, mapping capabilities, and military-grade UI components.

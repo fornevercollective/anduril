@@ -8,7 +8,7 @@
 
 A tactical defense interface clone built for integration with Anduril's SDK, featuring real-time entity tracking, mapping capabilities, and military-grade UI components.
 
-<img width="1318" alt="anduril+sdk" src="https://github.com/user-attachments/assets/bbd5729a-9bdb-4ef5-b9d7-2a06f83384e0" />
+<img width="1401" alt="anduril+sdk 1 0" src="https://github.com/user-attachments/assets/985e5d05-1244-404a-968a-e3734457a614" />
 <img width="1920" alt="anduril+sdk 2" src="https://github.com/user-attachments/assets/2f491981-bbf2-4716-825a-edc715d2f76e" />
 <img width="1920" alt="anduril+sdk 3" src="https://github.com/user-attachments/assets/f0cd2e55-4707-4eb0-a90b-7bfde6a346ec" />
 <img width="1920" alt="anduril+sdk 4" src="https://github.com/user-attachments/assets/5861b6f7-ac8d-4364-982e-6795209b0bd5" />

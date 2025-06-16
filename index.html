@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anduril Tactical Defense Interface - Developer Portal</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='m2 17 10 5 10-5'/%3E%3Cpath d='m2 12 10 5 10-5'/%3E%3C/svg%3E">
+    
+    <!-- Meta tags for SEO and sharing -->
+    <meta name="description" content="Anduril Tactical Defense Interface - A military-grade tactical defense platform built with React, TypeScript, and Anduril SDK integration.">
+    <meta name="keywords" content="Anduril, tactical defense, military interface, SDK, NVIDIA, NixOS, React, TypeScript">
+    <meta name="author" content="Anduril Industries">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tactical.anduril.com/">
+    <meta property="og:title" content="Anduril Tactical Defense Interface">
+    <meta property="og:description" content="Military-grade tactical defense platform with real-time entity tracking and SDK integration.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=1200&h=630&fit=crop">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tactical.anduril.com/">
+    <meta property="twitter:title" content="Anduril Tactical Defense Interface">
+    <meta property="twitter:description" content="Military-grade tactical defense platform with real-time entity tracking and SDK integration.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=1200&h=630&fit=crop">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        :root {
+            --military-bg: #0f172a;
+            --military-surface: #1e293b;
+            --military-border: #334155;
+            --military-text: #cbd5e1;
+            --military-muted: #64748b;
+            --military-accent: #475569;
+        }
+        
+        body {
+            background: var(--military-bg);
+            color: var(--military-text);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .military-card {
+            background: var(--military-surface);
+            border: 1px solid var(--military-border);
+            transition: all 0.3s ease;
+        }
+        
+        .military-card:hover {
+            border-color: var(--military-accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .status-indicator {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border: 2px solid var(--military-border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--military-bg);
+        }
+        
+        .iframe-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: opacity 0.3s ease;
+        }
+        
+        .iframe-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .tactical-grid {
+            background-image: 
+                linear-gradient(rgba(51, 65, 85, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(51, 65, 85, 0.3) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .sdk-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(71, 85, 105, 0.2);
+            border: 1px solid var(--military-border);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            color: var(--military-text);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .sdk-badge:hover {
+            background: rgba(71, 85, 105, 0.4);
+            transform: translateY(-1px);
+        }
+        
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid var(--military-border);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+        
+        .terminal-window {
+            background: #1a1a1a;
+            border: 1px solid var(--military-border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .terminal-header {
+            background: var(--military-surface);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--military-border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+    </style>
+</head>
+<body class="min-h-screen tactical-grid">
+    <!-- Header -->
+    <header class="border-b border-slate-700 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="w-8 h-8 bg-slate-600 rounded flex items-center justify-center">
+                        <svg class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m2 17 10 5 10-5"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m2 12 10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-lg font-semibold text-slate-200">ANDURIL TACTICAL DEFENSE</h1>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-slate-500 rounded-full status-indicator"></div>
+                        <span class="text-sm text-slate-500">DEVELOPER PORTAL</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-slate-400 font-mono">
+                        BUILD: v1.2.3 | STATUS: OPERATIONAL
+                    </div>
+                    <button id="fullscreen-btn" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded text-sm transition-colors">
+                        FULLSCREEN
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Live Application Section -->
+        <section class="mb-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-semibold text-slate-200 mb-2">Live Tactical Interface</h2>
+                    <p class="text-slate-400">Interactive demo of the deployed tactical defense system</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="sdk-badge">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        FIGMA DEPLOYED
+                    </div>
+                    <div class="sdk-badge">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        REAL-TIME
+                    </div>
+                </div>
+            </div>
+            
+            <div class="iframe-container">
+                <div id="iframe-overlay" class="iframe-overlay">
+                    <div class="text-center">
+                        <div class="animate-spin w-8 h-8 border-2 border-slate-600 border-t-slate-400 rounded-full mx-auto mb-4"></div>
+                        <p class="text-slate-400">Loading Tactical Interface...</p>
+                        <button id="load-iframe" class="mt-4 px-4 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded transition-colors">
+                            LAUNCH APPLICATION
+                        </button>
+                    </div>
+                </div>
+                <iframe 
+                    id="tactical-iframe"
+                    src=""
+                    data-src="https://sun-coup-75692007.figma.site/"
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0"
+                    title="Anduril Tactical Defense Interface"
+                    allow="fullscreen"
+                    style="border: none;">
+                </iframe>
+            </div>
+            
+            <!-- Application Controls -->
+            <div class="mt-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button id="reload-app" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded text-sm transition-colors">
+                        ↻ RELOAD
+                    </button>
+                    <button id="refresh-data" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded text-sm transition-colors">
+                        ⟲ REFRESH DATA
+                    </button>
+                    <div class="text-xs text-slate-500 font-mono">
+                        Last Updated: <span id="last-updated">--</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs text-slate-500">PERFORMANCE:</span>
+                    <div class="w-16 h-2 bg-slate-800 rounded overflow-hidden">
+                        <div class="h-full bg-green-500 w-4/5"></div>
+                    </div>
+                    <span class="text-xs text-slate-400">85%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SDK Integration Hub -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold text-slate-200 mb-6">SDK Integration Hub</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Anduril Lattice SDK -->
+                <div class="military-card rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-slate-200">Anduril Lattice SDK</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4">Core defense platform integration with real-time entity tracking and command & control capabilities.</p>
+                    <div class="space-y-2">
+                        <a href="https://docs.anduril.com/lattice/sdk" target="_blank" class="sdk-badge block w-full text-center">
+                            📚 Documentation
+                        </a>
+                        <a href="https://github.com/anduril/lattice-sdk" target="_blank" class="sdk-badge block w-full text-center">
+                            💻 GitHub Repository
+                        </a>
+                        <a href="https://api.anduril.com/sdk/examples" target="_blank" class="sdk-badge block w-full text-center">
+                            🔧 Code Examples
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Figma Integration -->
+                <div class="military-card rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-purple-600 rounded flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M15.5 11.5c0 2-1.5 3.5-3.5 3.5s-3.5-1.5-3.5-3.5 1.5-3.5 3.5-3.5 3.5 1.5 3.5 3.5z"/>
+                                <path d="M8.5 15.5c0-2-1.5-3.5-3.5-3.5S1.5 13.5 1.5 15.5 3 19 5 19s3.5-1.5 3.5-3.5z"/>
+                                <path d="M8.5 8.5c0 2-1.5 3.5-3.5 3.5S1.5 10.5 1.5 8.5 3 5 5 5s3.5 1.5 3.5 3.5z"/>
+                                <path d="M8.5 1.5c0 2-1.5 3.5-3.5 3.5S1.5 3.5 1.5 1.5 3 -2 5 -2s3.5 1.5 3.5 3.5z"/>
+                                <path d="M15.5 8.5c0-2 1.5-3.5 3.5-3.5s3.5 1.5 3.5 3.5S20.5 12 18.5 12s-3.5-1.5-3.5-3.5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-slate-200">Figma Design System</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4">Design-to-code workflow with Figma Make integration for rapid prototyping and deployment.</p>
+                    <div class="space-y-2">
+                        <a href="https://www.figma.com/file/tactical-defense" target="_blank" class="sdk-badge block w-full text-center">
+                            🎨 Design Files
+                        </a>
+                        <a href="https://sun-coup-75692007.figma.site/" target="_blank" class="sdk-badge block w-full text-center">
+                            🚀 Live Preview
+                        </a>
+                        <a href="https://www.figma.com/dev-mode" target="_blank" class="sdk-badge block w-full text-center">
+                            🔧 Dev Mode
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NVIDIA Deployment -->
+                <div class="military-card rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-green-600 rounded flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-slate-200">NVIDIA Edge Compute</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4">Hardware-accelerated deployment on NVIDIA Jetson platforms with CUDA optimization.</p>
+                    <div class="space-y-2">
+                        <a href="https://developer.nvidia.com/embedded/jetson" target="_blank" class="sdk-badge block w-full text-center">
+                            ⚡ Jetson Platform
+                        </a>
+                        <a href="https://docs.nvidia.com/cuda/" target="_blank" class="sdk-badge block w-full text-center">
+                            🔧 CUDA Toolkit
+                        </a>
+                        <a href="https://catalog.ngc.nvidia.com/containers" target="_blank" class="sdk-badge block w-full text-center">
+                            📦 NGC Containers
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NixOS Deployment -->
+                <div class="military-card rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-8 h-8 bg-slate-600 rounded flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l-5.5 9.5L12 20l5.5-8.5L12 2zm0 3l3.5 6L12 17l-3.5-6L12 5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-slate-200">NixOS Deployment</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-4">Reproducible and immutable deployments with declarative system configuration.</p>
+                    <div class="space-y-2">
+                        <a href="https://nixos.org/guides/how-nix-works.html" target="_blank" class="sdk-badge block w-full text-center">
+                            📖 NixOS Guide
+                        </a>
+                        <a href="https://search.nixos.org/packages" target="_blank" class="sdk-badge block w-full text-center">
+                            📦 Package Search
+                        </a>
+                        <a href="https://github.com/NixOS/nixpkgs" target="_blank" class="sdk-badge block w-full text-center">
+                            💻 Nixpkgs Repo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Development Tools -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold text-slate-200 mb-6">Development Tools & Resources</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Quick Start Terminal -->
+                <div class="military-card rounded-lg p-6">
+                    <h3 class="font-semibold text-slate-200 mb-4">Quick Start Commands</h3>
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-dot dot-red"></div>
+                            <div class="terminal-dot dot-yellow"></div>
+                            <div class="terminal-dot dot-green"></div>
+                            <span class="text-xs text-slate-400 ml-2">tactical-interface</span>
+                        </div>
+                        <div class="p-4">
+                            <div class="code-block">
+<span class="text-green-400"># Clone and setup</span>
+git clone https://github.com/anduril/tactical-interface
+cd tactical-interface
+npm install
+
+<span class="text-green-400"># Development</span>
+npm run dev
+
+<span class="text-green-400"># Build and deploy</span>
+npm run build
+npm run deploy:nixos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Architecture -->
+                <div class="military-card rounded-lg p-6">
+                    <h3 class="font-semibold text-slate-200 mb-4">System Architecture</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-slate-300">Frontend Framework</span>
+                            <span class="sdk-badge">React 18 + TypeScript</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-slate-300">UI Framework</span>
+                            <span class="sdk-badge">Tailwind CSS v4</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-slate-300">Build Tool</span>
+                            <span class="sdk-badge">Vite</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-slate-300">Rendering</span>
+                            <span class="sdk-badge">Canvas API</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-slate-300">Bundle Size</span>
+                            <span class="sdk-badge">~185 KB (gzipped)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-slate-300">Performance</span>
+                            <span class="sdk-badge">95+ Lighthouse</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Integration Examples -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold text-slate-200 mb-6">API Integration Examples</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Python SDK -->
+                <div class="military-card rounded-lg p-6">
+                    <h3 class="font-semibold text-slate-200 mb-4">Python SDK Integration</h3>
+                    <div class="code-block">
+<span class="text-purple-400">from</span> <span class="text-blue-400">anduril_sdk</span> <span class="text-purple-400">import</span> <span class="text-yellow-400">LatticeClient</span>
+
+<span class="text-green-400"># Initialize Lattice client</span>
+<span class="text-yellow-400">client</span> = <span class="text-blue-400">LatticeClient</span>(
+    <span class="text-cyan-400">api_key</span>=<span class="text-green-300">"your_api_key"</span>,
+    <span class="text-cyan-400">endpoint</span>=<span class="text-green-300">"https://api.anduril.com"</span>
+)
+
+<span class="text-green-400"># Real-time entity tracking</span>
+<span class="text-purple-400">async def</span> <span class="text-yellow-400">track_entities</span>():
+    <span class="text-purple-400">async for</span> <span class="text-yellow-400">entity</span> <span class="text-purple-400">in</span> <span class="text-blue-400">client</span>.<span class="text-yellow-400">stream_entities</span>():
+        <span class="text-blue-400">print</span>(<span class="text-green-300">f"Entity: {entity.name}"</span>)
+                    </div>
+                </div>
+
+                <!-- JavaScript SDK -->
+                <div class="military-card rounded-lg p-6">
+                    <h3 class="font-semibold text-slate-200 mb-4">JavaScript SDK Integration</h3>
+                    <div class="code-block">
+<span class="text-purple-400">import</span> { <span class="text-yellow-400">LatticeSDK</span> } <span class="text-purple-400">from</span> <span class="text-green-300">'@anduril/lattice-sdk'</span>;
+
+<span class="text-green-400">// Initialize SDK</span>
+<span class="text-purple-400">const</span> <span class="text-yellow-400">sdk</span> = <span class="text-purple-400">new</span> <span class="text-blue-400">LatticeSDK</span>({
+  <span class="text-cyan-400">apiKey</span>: <span class="text-green-300">'your_api_key'</span>,
+  <span class="text-cyan-400">endpoint</span>: <span class="text-green-300">'https://api.anduril.com'</span>
+});
+
+<span class="text-green-400">// Entity subscription</span>
+<span class="text-yellow-400">sdk</span>.<span class="text-blue-400">entities</span>.<span class="text-yellow-400">subscribe</span>(<span class="text-cyan-400">entity</span> => {
+  <span class="text-blue-400">console</span>.<span class="text-yellow-400">log</span>(<span class="text-green-300">`Updated: ${entity.name}`</span>);
+});
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deployment Status -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold text-slate-200 mb-6">Deployment Status & Health</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="military-card rounded-lg p-6 text-center">
+                    <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-slate-200 mb-2">Application Status</h3>
+                    <p class="text-green-400 font-semibold">OPERATIONAL</p>
+                    <p class="text-xs text-slate-500 mt-1">Uptime: 99.9%</p>
+                </div>
+
+                <div class="military-card rounded-lg p-6 text-center">
+                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-slate-200 mb-2">SDK Connection</h3>
+                    <p class="text-blue-400 font-semibold">CONNECTED</p>
+                    <p class="text-xs text-slate-500 mt-1">Latency: 45ms</p>
+                </div>
+
+                <div class="military-card rounded-lg p-6 text-center">
+                    <div class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-slate-200 mb-2">Data Stream</h3>
+                    <p class="text-yellow-400 font-semibold">LIVE</p>
+                    <p class="text-xs text-slate-500 mt-1">Rate: 10Hz</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-700 bg-slate-950 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-semibold text-slate-200 mb-4">Documentation</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Getting Started</a>
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">API Reference</a>
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Deployment Guide</a>
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Troubleshooting</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-200 mb-4">Platform</h4>
+                    <div class="space-y-2">
+                        <a href="https://www.anduril.com" target="_blank" class="block text-sm text-slate-400 hover:text-slate-300">Anduril Industries</a>
+                        <a href="https://lattice.anduril.com" target="_blank" class="block text-sm text-slate-400 hover:text-slate-300">Lattice Platform</a>
+                        <a href="https://docs.anduril.com" target="_blank" class="block text-sm text-slate-400 hover:text-slate-300">Developer Docs</a>
+                        <a href="https://status.anduril.com" target="_blank" class="block text-sm text-slate-400 hover:text-slate-300">System Status</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-200 mb-4">Support</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Contact Support</a>
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Community Forum</a>
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Bug Reports</a>
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Feature Requests</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-slate-200 mb-4">Legal</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Privacy Policy</a>
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Terms of Service</a>
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Security</a>
+                        <a href="#" class="block text-sm text-slate-400 hover:text-slate-300">Compliance</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 pt-8 mt-8">
+                <div class="flex items-center justify-between">
+                    <p class="text-sm text-slate-500">© 2024 Anduril Industries. All rights reserved.</p>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-xs text-slate-600">CLASSIFICATION: UNCLASSIFIED</span>
+                        <span class="text-xs text-slate-600">|</span>
+                        <span class="text-xs text-slate-600">VERSION: 1.2.3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Load iframe on demand
+        document.getElementById('load-iframe').addEventListener('click', function() {
+            const iframe = document.getElementById('tactical-iframe');
+            const overlay = document.getElementById('iframe-overlay');
+            
+            iframe.src = iframe.getAttribute('data-src');
+            overlay.classList.add('hidden');
+            
+            // Update timestamp
+            updateTimestamp();
+        });
+
+        // Reload application
+        document.getElementById('reload-app').addEventListener('click', function() {
+            const iframe = document.getElementById('tactical-iframe');
+            iframe.src = iframe.src;
+            updateTimestamp();
+        });
+
+        // Refresh data simulation
+        document.getElementById('refresh-data').addEventListener('click', function() {
+            updateTimestamp();
+            // Simulate data refresh
+            setTimeout(() => {
+                console.log('Data refreshed');
+            }, 500);
+        });
+
+        // Fullscreen toggle
+        document.getElementById('fullscreen-btn').addEventListener('click', function() {
+            const iframe = document.getElementById('tactical-iframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
+            }
+        });
+
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            const timestamp = now.toLocaleString('en-US', {
+                hour12: false,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('last-updated').textContent = timestamp;
+        }
+
+        // Initialize
+        updateTimestamp();
+        
+        // Auto-update timestamp every 30 seconds
+        setInterval(updateTimestamp, 30000);
+
+        // Health check simulation
+        function simulateHealthCheck() {
+            // Simulate random performance metrics
+            const performance = Math.floor(Math.random() * 20) + 80; // 80-100%
+            const performanceBar = document.querySelector('.bg-green-500');
+            if (performanceBar) {
+                performanceBar.style.width = performance + '%';
+            }
+        }
+
+        setInterval(simulateHealthCheck, 5000);
+
+        // Console ASCII art
+        console.log(`
+    ╔══════════════════════════════════════════════════════════════╗
+    ║                   ANDURIL TACTICAL DEFENSE                    ║
+    ║                        DEVELOPER PORTAL                       ║
+    ╠══════════════════════════════════════════════════════════════╣
+    ║  Status: OPERATIONAL                                          ║
+    ║  Build:  v1.2.3                                               ║
+    ║  SDK:    Connected                                             ║
+    ║  Perf:   95+ Lighthouse Score                                 ║
+    ╚══════════════════════════════════════════════════════════════╝
+        `);
+    </script>
+</body>
+</html>

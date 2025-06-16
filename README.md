@@ -5,6 +5,16 @@
 A tactical defense interface clone built for integration with Anduril's SDK, featuring real-time entity tracking, mapping capabilities, and military-grade UI components.
 
 <img width="1318" alt="anduril+sdk" src="https://github.com/user-attachments/assets/bbd5729a-9bdb-4ef5-b9d7-2a06f83384e0" />
+<img width="1920" alt="anduril+sdk 2" src="https://github.com/user-attachments/assets/2f491981-bbf2-4716-825a-edc715d2f76e" />
+<img width="1920" alt="anduril+sdk 3" src="https://github.com/user-attachments/assets/f0cd2e55-4707-4eb0-a90b-7bfde6a346ec" />
+<img width="1920" alt="anduril+sdk 4" src="https://github.com/user-attachments/assets/5861b6f7-ac8d-4364-982e-6795209b0bd5" />
+<img width="1920" alt="anduril+sdk 5" src="https://github.com/user-attachments/assets/71e86666-3a58-4c04-84fb-c08628ed2352" />
+<img width="1920" alt="anduril+sdk 6" src="https://github.com/user-attachments/assets/8da9b02c-a1ab-480f-93bf-657f37c8c7cc" />
+<img width="1920" alt="anduril+sdk 7" src="https://github.com/user-attachments/assets/df923f0d-c616-4837-ab87-36ecb705268d" />
+<img width="1920" alt="anduril+sdk 8" src="https://github.com/user-attachments/assets/eb346058-3fee-48f7-bab8-f5e1a25814e8" />
+<img width="1920" alt="anduril+sdk 9" src="https://github.com/user-attachments/assets/0ba72d0d-be54-45a2-a11b-ab31509c0812" />
+
+
 
 ## 🚀 Quick Start
 

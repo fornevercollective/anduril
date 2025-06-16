@@ -1,9 +1,8 @@
 # Anduril + Lattice sdk 
 
 A tactical defense interface clone built for integration with Anduril's SDK, featuring real-time entity tracking, mapping capabilities, and military-grade UI components.
-<img width="1318" alt="anduril+sdk" src="https://github.com/user-attachments/assets/bbd5729a-9bdb-4ef5-b9d7-2a06f83384e0" />
 
-![Lattice Interface](https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800&h=400&fit=crop)
+<img width="1318" alt="anduril+sdk" src="https://github.com/user-attachments/assets/bbd5729a-9bdb-4ef5-b9d7-2a06f83384e0" />
 
 ## 🚀 Quick Start
 

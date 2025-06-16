@@ -17,7 +17,7 @@ A tactical defense interface clone built for integration with Anduril's SDK, fea
 <img width="1920" alt="anduril+sdk 7" src="https://github.com/user-attachments/assets/df923f0d-c616-4837-ab87-36ecb705268d" />
 <img width="1920" alt="anduril+sdk 8" src="https://github.com/user-attachments/assets/eb346058-3fee-48f7-bab8-f5e1a25814e8" />
 <img width="1920" alt="anduril+sdk 9" src="https://github.com/user-attachments/assets/0ba72d0d-be54-45a2-a11b-ab31509c0812" />
-
+<img width="1403" alt="anduril+sdk 10" src="https://github.com/user-attachments/assets/d645a890-17ef-4fbc-a9f3-1ed38244326c" />
 
 
 ## 🚀 Quick Start

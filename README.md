@@ -1,8 +1,8 @@
 # Anduril + Lattice sdk 
 -
-ai - https://github.com/tinygrad
-ghotz - https://comma.ai/shop
-atono gocart - delivery for devs - https://vapor.autos
+ai - https://github.com/tinygrad <p/>
+ghotz - https://comma.ai/shop <p/>
+atono gocart - delivery for devs - https://vapor.autos<p/>
 -----------------------
 <img width="1318" alt="anduril+sdk updates 1" src="https://github.com/user-attachments/assets/e87e5c12-b4d5-4a30-8638-71961ec51ebf" />
 <img width="1318" alt="anduril+sdk updates 2" src="https://github.com/user-attachments/assets/70d2703d-9eed-4959-97a1-288077cec7de" />

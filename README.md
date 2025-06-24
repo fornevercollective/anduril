@@ -1,4 +1,4 @@
-# Anduril + Lattice sdk 
+# ui-ux Anduril + Lattice sdk 
 -
 ai - https://github.com/tinygrad <p/>
 ghotz - https://comma.ai/shop <p/>

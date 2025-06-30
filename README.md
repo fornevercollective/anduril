@@ -511,3 +511,8 @@ For licensing inquiries, contact: licensing@anduril.com
 ```
 
 Let me know if you want any further tweaks!
+#concepts for addons
+ai - https://github.com/tinygrad <p/>
+ghotz - https://comma.ai/shop <p/>
+atono gocart - delivery for devs - https://vapor.autos<p/>
+-----------------------

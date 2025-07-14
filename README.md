@@ -1,4 +1,4 @@
-# ui-ux Anduril + Lattice sdk 
+# ui-ux nav software + sdk 
 -
 
 <img width="1318" alt="anduril+sdk updates 1" src="https://github.com/user-attachments/assets/e87e5c12-b4d5-4a30-8638-71961ec51ebf" />
